@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid()) 
+  email     String   @unique
+  password  String
+  role      Role
+  createdAt DateTime @default(now())
+}
+
+enum Role {
+  user
+  admin
+  mitra
+}
+
+model Voucher {
+  id          String   @id @default(cuid()) 
+  contact     String
+  contactType String   
+  qrCode      String   @unique
+  qrImage     String   @db.LongText   
+  status      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  scannedBy   String?
+}
